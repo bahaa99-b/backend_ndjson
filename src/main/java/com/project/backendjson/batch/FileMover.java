@@ -39,8 +39,22 @@ public class FileMover extends JobExecutionListenerSupport {
         }
 
         try {
-            Files.createDirectories(Path.of(PROCESSED_DIRECTORY));
-            Files.createDirectories(Path.of(ERROR_DIRECTORY));
+            Path processedDirPath = Path.of(PROCESSED_DIRECTORY);
+            Path errorDirPath = Path.of(ERROR_DIRECTORY);
+
+            if (Files.notExists(processedDirPath)) {
+                Files.createDirectories(processedDirPath);
+                logger.info("Processed directory created at: {}", PROCESSED_DIRECTORY);
+            } else {
+                logger.info("Processed directory already exists at: {}", PROCESSED_DIRECTORY);
+            }
+
+            if (Files.notExists(errorDirPath)) {
+                Files.createDirectories(errorDirPath);
+                logger.info("Error directory created at: {}", ERROR_DIRECTORY);
+            } else {
+                logger.info("Error directory already exists at: {}", ERROR_DIRECTORY);
+            }
 
             List<File> filesToMove = reader.getNdjsonFiles();
             if (filesToMove.isEmpty()) {
@@ -62,16 +76,13 @@ public class FileMover extends JobExecutionListenerSupport {
                 }
 
                 try {
-                    // Déplacer le fichier
                     Files.move(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
                     logger.info("Moved {} to {}", sourcePath, targetPath);
 
-                    // Upload sur MinIO après déplacement
                     if (Files.exists(targetPath)) {
                         minioService.uploadFile(targetPath.toFile());
                         logger.info("Uploaded to MinIO: {}", targetPath);
 
-                        // Supprimer le fichier source après déplacement
                         boolean deleted = Files.deleteIfExists(sourcePath);
                         if (deleted) {
                             logger.info("Deleted file: {}", sourcePath);

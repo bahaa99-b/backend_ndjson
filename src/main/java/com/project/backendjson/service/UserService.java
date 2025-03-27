@@ -44,7 +44,6 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    // Sauvegarder les utilisateurs au format NDJSON
     public void saveUsersToNDJSON(List<User> users, File outputFile) throws IOException {
         try (FileWriter writer = new FileWriter(outputFile)) {
             for (User user : users) {

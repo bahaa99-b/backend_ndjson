@@ -30,18 +30,15 @@ public class MinIOService {
 
     public void uploadFile(File file) {
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
-            // Vérifier si le bucket existe
             boolean bucketExists = minioClient.bucketExists(
                     BucketExistsArgs.builder().bucket(bucketName).build()
             );
 
             if (!bucketExists) {
-                // Créer le bucket s'il n'existe pas
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
                 System.out.println("Bucket créé : " + bucketName);
             }
 
-            // Télécharger le fichier sur MinIO
             minioClient.putObject(
                     PutObjectArgs.builder()
                             .bucket(bucketName)

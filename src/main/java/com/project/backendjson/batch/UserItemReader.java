@@ -34,19 +34,16 @@ public class UserItemReader implements ItemReader<User> {
                 throw new RuntimeException("Directory is not a directory: " + absolutePath);
             }
 
-            // Récupérer tous les fichiers NDJSON
             ndjsonFiles = Files.list(directory.toPath())
                     .map(Path::toFile)
                     .filter(file -> file.getName().endsWith(".ndjson") && file.canRead() && file.length() > 0)
                     .collect(Collectors.toList());
 
-            // Log pour vérifier les fichiers trouvés
             logger.info("Fichiers NDJSON trouvés : {}", ndjsonFiles.size());
             for (File file : ndjsonFiles) {
                 logger.info("Fichier trouvé : {}", file.getAbsolutePath()); // Log des fichiers trouvés
             }
 
-            // Lire toutes les lignes des fichiers
             StringBuilder allLines = new StringBuilder();
             for (File file : ndjsonFiles) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -57,7 +54,6 @@ public class UserItemReader implements ItemReader<User> {
                 }
             }
 
-            // Initialiser l'itérateur avec toutes les lignes
             linesIterator = allLines.toString().lines().iterator();
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de la lecture des fichiers NDJSON", e);
