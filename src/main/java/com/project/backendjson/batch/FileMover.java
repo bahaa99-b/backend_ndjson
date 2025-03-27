@@ -21,8 +21,8 @@ public class FileMover extends JobExecutionListenerSupport {
     private final UserItemReader reader;
     private final MinIOService minioService;
 
-    private static final String PROCESSED_DIRECTORY = "C:/Users/ACER ASPIRE 3/Desktop/Prjt_Omnishore/backendjson/src/main/java/com/project/backendjson/directory_processed";
-    private static final String ERROR_DIRECTORY = "C:/Users/ACER ASPIRE 3/Desktop/Prjt_Omnishore/backendjson/src/main/java/com/project/backendjson/directory_error";
+    private static final String PROCESSED_DIRECTORY = "C:/Users/ACER ASPIRE 3/Desktop/directory_processed";
+    private static final String ERROR_DIRECTORY = "C:/Users/ACER ASPIRE 3/Desktop/directory_error";
 
     public FileMover(UserItemReader reader, MinIOService minioService) {
         this.reader = reader;
@@ -53,7 +53,6 @@ public class FileMover extends JobExecutionListenerSupport {
 
                 Path targetPath;
 
-                // Déplacez le fichier selon l'état du job
                 if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
                     targetPath = Path.of(PROCESSED_DIRECTORY, file.getName());
                     logger.info("Job completed successfully, moving file to processed directory.");

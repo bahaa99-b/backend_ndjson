@@ -31,9 +31,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BatchConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(BatchConfig.class);  // Logger for BatchConfig
-
-    private static final String DIRECTORY_PATH = "C:/Users/ACER ASPIRE 3/Desktop/Prjt_Omnishore/backendjson/src/main/java/com/project/backendjson/directory_ndjson";
+    private static final Logger logger = LoggerFactory.getLogger(BatchConfig.class);
+    private static final String DIRECTORY_PATH = "C:/Users/ACER ASPIRE 3/Desktop/directory_ndjson";
 
     private final UserRepository userRepository;
     private final EntityManagerFactory entityManagerFactory;

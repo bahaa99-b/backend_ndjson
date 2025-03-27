@@ -1,3 +1,0 @@
-{"id": 1, "username": "johndoe", "email": "johndoe@example.com", "password": "password123"}
-{"id": 2, "username": "janedoe", "email": "janedoe@example.com", "password": "password456", "createdAt": "2025-03-22T00:01:00"}
-{"id": 3, "username": "samsmith", "email": null, "password": "password789", "createdAt": "2025-03-22T00:02:00"}
